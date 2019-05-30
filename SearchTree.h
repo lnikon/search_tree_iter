@@ -28,6 +28,8 @@ class SearchTree {
     static bool   insert(Node*& tree, const T& elem);
     static bool	  remove(Node*& tree, const T& elem);
 
+    static Node* min(Node* tree);
+
     //Service methods
     void	PrintInorder(Node* ptr) const;
     void	PrintPreorder(Node* ptr) const;
@@ -199,6 +201,57 @@ template<class T>
     bool   
 SearchTree<T>::remove(Node*& tree, const T& elem)
 {
+    if(tree == 0) 
+    {
+        return false;
+    }
+
+    if(elem < tree->info_)
+    {
+        SearchTree<T>::remove(tree->llink_, elem);
+    }
+    else if(elem > tree->info_)
+    {
+        SearchTree<T>::remove(tree->rlink_, elem);
+    }
+    else 
+    {
+        if(tree->llink_ == 0)
+        {
+            Node* tmp = tree->rlink_;
+            delete tree;
+            tree = tmp;
+        } 
+        else if(tree->rlink_ == 0)
+        {
+            Node* tmp = tree->llink_;
+            delete tree;
+            tree = tmp;
+        }
+        else
+        {
+            Node* tmp = SearchTree<T>::min(tree->rlink_);
+            tree->info_ = tmp->info_;
+            delete tmp;
+
+            return true;
+        }
+
+        return false;
+    }
+}
+
+template<class T>
+typename SearchTree<T>::Node* 
+SearchTree<T>::min(Node* tree)
+{
+    Node* tmp = tree;
+    while(tmp != 0 && tmp->llink_ != 0)
+    {
+        tmp = tmp->llink_;
+    }
+
+    return tmp;
 }
 
 //_______SERVICE METHODS_______
@@ -353,6 +406,7 @@ template<class T>
     void 
 SearchTree<T>::remove(const T& elem)		
 {
+    SearchTree<T>::remove(tree_, elem);
 }
 
 template<class T>

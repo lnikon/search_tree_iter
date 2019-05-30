@@ -14,15 +14,17 @@ int main()
     // st.PrintInorder();
 
     SearchTree<int> st1(st);
-    st1.PrintPostorder(); 
+    // st1.PrintPostorder(); 
 
     SearchTree<int> st2;
     st2 = st1;
 
-    st2.clear();
+    // st2.clear();
     st2.insert(-1000);
+    //st2.PrintPreorder();
+    //st2.remove(-1000);
     st2.PrintPreorder();
-
     // st2.print();
 
+    return 0;
 }
