@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stack>
 #include <iostream>
 #include <cstdint>
 
@@ -66,6 +67,14 @@ class SearchTree {
 
     //Iterators
     struct iterator {
+        const T& operator*()
+        {
+            return current_->info_;
+        }
+
+        private:
+            Node* current_{nullptr};
+            std::stack<Node *> prevNodes_{};
     };
 
     iterator begin();
